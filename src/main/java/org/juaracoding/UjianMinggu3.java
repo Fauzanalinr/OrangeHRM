@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class UjianMinggu3 {
 
@@ -41,10 +43,20 @@ public class UjianMinggu3 {
         Utils.delay(1);
         WebElement logout = driver.findElement(By.xpath("//a[@id='logout_sidebar_link']"));
         logout.click();
-        Utils.delay(2);
-        WebElement addCart = driver.findElement(By.xpath("//div[@id='add-to-cart-sauce-labs-backpack']"));
-        addCart.click();
 
+        WebElement btnAddCart = driver.findElement(By.xpath("//[@id=\"add-to-cart-sauce-labs-backpack\"]"));
+        btnAddCart.click();
+
+        Utils.delay(2);
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement cartElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='shopping_cart_container']")));
+
+        if (cartElement.isDisplayed()){
+            System.out.println("Berhasil memasukkan barang ke keranjang belanja");
+        } else {
+            System.out.println("Gagal memasukkan barang ke keranjang belanja");
+        }
         //navigate back
         driver.navigate().back();
 
